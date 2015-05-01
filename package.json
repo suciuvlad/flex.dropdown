@@ -1,8 +1,9 @@
 {
   "name": "flex.dropdown",
+  "title": "flex.dropdown",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A basic barebones dropdown menu",
+  "main": "dist/flex.dropdown.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
