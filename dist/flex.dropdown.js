@@ -13,11 +13,8 @@
   }(function($) {
 
     var defaults = {
-      trigger: "mouseover"
-    };
-
-    function clear() {
-      $('.drd--toggle').parent().removeClass('is-open');
+      trigger: "mouseover",
+      autoOpen: true
     };
 
     Dropdown = function (elem, options) {
@@ -30,6 +27,7 @@
       this.element  = elem;
       this.parent   = $(elem).parent();
       this.menu     = $(elem).parent().find(".drd--menu");
+      this.isOpen = false;
 
 
       $(document).on('click', function (e) {
@@ -37,26 +35,42 @@
           return;
         }
 
-        clear();
+        self.hide();
       });
 
-      this._onTrigger();
+      this._setupBindings();
 
       return this;
     };
 
-    Dropdown.prototype._onTrigger = function () {
-      var self = this,
-        isActive;
+    Dropdown.prototype.show = function () {
+      if (this.isOpen) { return; }
+      this.isOpen = true;
+
+      this.parent.addClass('is-open');
+
+      return this;
+    };
+
+    Dropdown.prototype.hide = function () {
+
+      if (!this.isOpen) { return; }
+      this.isOpen = false;
+
+      this.parent.removeClass('is-open');
+
+      return this;
+
+    };
+
+    Dropdown.prototype._setupBindings = function () {
+      var self = this;
 
       $(this.element).click(function (e) {
         e.stopPropagation();
         e.preventDefault();
-        var isActive  = self.parent.hasClass('is-open');
 
-
-        clear();
-        !isActive && self.parent.toggleClass('is-open');
+        self.isOpen ? self.hide() : self.show();
       });
     };
 
@@ -71,6 +85,13 @@
             extOptions = $.extend({}, Dropdown.prototype.defaults, initOptions, dataOptions);
           if (!data) {
             $.data(this, 'plugin_' + name, (data = new Klass(this, extOptions)));
+          }
+
+          // It's an action such as `show`
+          if (typeof options === 'string') {
+            data[options]();
+          } else if (extOptions.autoOpen) {
+            data.show();
           }
         });
       };
