@@ -1,7 +1,7 @@
 {
   "name": "flex.dropdown",
   "title": "flex.dropdown",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A basic barebones dropdown menu",
   "main": "dist/flex.dropdown.js",
   "scripts": {
