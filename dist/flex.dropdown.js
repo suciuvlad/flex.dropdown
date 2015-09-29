@@ -14,7 +14,7 @@
 
     var defaults = {
       trigger: "mouseover",
-      autoOpen: true
+      autoOpen: false
     };
 
     Dropdown = function (elem, options) {
